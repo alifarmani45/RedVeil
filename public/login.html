@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ورود — RedVeil</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="login-screen">
+  <div class="glass login-card">
+    <div class="login-mark">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 2 4 6v6c0 5 3.5 8.7 8 10 4.5-1.3 8-5 8-10V6l-8-4z" stroke="#fff" stroke-width="2"/></svg>
+    </div>
+    <div class="login-title">RedVeil</div>
+    <div class="login-sub">ورود به پنل مدیریت</div>
+
+    <form id="loginForm">
+      <div class="field">
+        <label>نام کاربری</label>
+        <input type="text" id="username" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label>رمز عبور</label>
+        <input type="password" id="password" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn btn-primary">ورود</button>
+      <div class="error-msg" id="errorMsg"></div>
+    </form>
+  </div>
+</div>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const errEl = document.getElementById('errorMsg');
+  errEl.textContent = '';
+  try {
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      errEl.textContent = data.error === 'invalid credentials' ? 'نام کاربری یا رمز عبور اشتباه است' : 'خطا در ورود';
+      return;
+    }
+    window.location.href = '/';
+  } catch (err) {
+    errEl.textContent = 'خطا در ارتباط با سرور';
+  }
+});
+</script>
+</body>
+</html>

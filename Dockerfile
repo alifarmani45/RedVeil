@@ -20,7 +20,6 @@ COPY . .
 RUN chmod +x start.sh
 
 ENV DATA_DIR=/data
-VOLUME ["/data"]
 
 EXPOSE 8080
 CMD ["./start.sh"]

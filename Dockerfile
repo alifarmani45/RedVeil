@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
 
 # --- install xray-core ---
-ARG XRAY_VERSION=v25.6.8
+ARG XRAY_VERSION=v26.7.28
 RUN curl -L -o /tmp/xray.zip \
     https://github.com/XTLS/Xray-core/releases/download/${XRAY_VERSION}/Xray-linux-64.zip \
     && unzip /tmp/xray.zip -d /usr/local/bin xray \
